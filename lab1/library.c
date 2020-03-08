@@ -7,8 +7,8 @@
 struct MainArray* createArray(int numberOfBlocks){
     if (numberOfBlocks <= 0) return NULL;
     struct MainArray *mainArray= (struct MainArray*)calloc(1,sizeof(struct MainArray));
-    mainArray -> numberOfBlocks = numberOfBlocks;
-    mainArray -> blocks = (struct Block**)calloc(numberOfBlocks, sizeof(struct Block*));
+    mainArray -> numberOfBlocks = 0;
+    mainArray -> blocks = (char**)calloc(numberOfBlocks, sizeof(char*));
 
     return mainArray;
 }
@@ -16,7 +16,7 @@ struct MainArray* createArray(int numberOfBlocks){
 struct Block *createBlock(int numberOfOperations){
   if(numberOfOperations <= 0) return NULL;
   struct Block * block=(struct Block*)calloc(1,sizeof(struct Block));
-  block -> operations=(struct Operation**)calloc(numberOfOperations,sizeof(struct Operation*));
+  block -> operations=(char**)calloc(numberOfOperations,sizeof(char*));
   block -> numberOfOperations = numberOfOperations;
 
   return block;
@@ -77,15 +77,14 @@ struct Block* createBlockAndOperations(char *tmp, int numberOfOperations){
   size_t len = 0;
 
   struct Block * block = createBlock(numberOfOperations);
-  block -> operations = calloc(1, sizeof(struct Operation*));
   char operation[256];
   strcpy(operation,"");
   int i = 0;
   while(getline(&line, &len, f) != -1){
     if(line[0] >= '0' && line[0] <= '9'){
       if(strcmp(operation, "") != 0){
-        block -> operations[i]=(struct Operation*)calloc(strlen(operation), sizeof(struct Operation));
-        strcpy(block -> operations[i] -> text, operation);
+        block -> operations[i]=(char*)calloc(strlen(operation), sizeof(char));
+        strcpy(block -> operations[i], operation);
         printf("%s\n", operation);
         i++;
         strcpy(operation ,"");
@@ -95,8 +94,8 @@ struct Block* createBlockAndOperations(char *tmp, int numberOfOperations){
   }
 
   if(strcmp(operation, "") != 0){ //last editing operation
-    block -> operations[i]=(struct Operation*)calloc(strlen(operation), sizeof(struct Operation));
-    strcpy(block -> operations[i] -> text, operation);
+    block -> operations[i]=(char*)calloc(strlen(operation), sizeof(char));
+    strcpy(block -> operations[i], operation);
   }
 
   fclose(f);
@@ -109,7 +108,6 @@ void processFiles(char *files[], int size, struct MainArray *mainArray){
   int index = 0;
   for (int i = 0; i< size-1; i+=2){
     int numberOfOperations = countOperationsInBlock(files[i], files[i+1]);
-    printf("\n\n%d\n\n", numberOfOperations);
     compareTwoFiles(files[i], files[i+1]);
     struct Block* block = createBlockAndOperations("tmp.txt", numberOfOperations);
     system("rm tmp.txt");
@@ -126,7 +124,6 @@ void processFiles(char *files[], int size, struct MainArray *mainArray){
     mainArray -> blocks[index] = block;
     index ++;
     mainArray -> numberOfBlocks++;
-    //free("tmp.txt");
   }
 }
 
@@ -135,7 +132,8 @@ int main(){
     struct MainArray* mainArray = createArray(2);
     char*a = "a.txt";
     char*b = "b.txt";
-    char* files[4] = {a, b};
-    printf("\n\n%d\n\n", countOperationsInBlock(a, b));
-    //process_files(files, 2, mainArray);
+    char*c = "c.txt";
+    char*d = "d.txt";
+    char* files[4] = {a, b, c, d};
+    process_files(files, 4, mainArray);
 }

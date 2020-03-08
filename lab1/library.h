@@ -1,12 +1,9 @@
 #ifndef LAB1_LIBRARY_H
 #define LAB1_LIBRARY_H
 
-struct Operation{
-    char* text;
-};
 struct Block{
     int numberOfOperations;
-    struct Operation** operations;
+    char** operations;
 };
 struct MainArray{
     int numberOfBlocks; //number of pairs of files
