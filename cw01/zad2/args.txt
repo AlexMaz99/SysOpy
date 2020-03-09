@@ -1,0 +1,2 @@
+create_table 1
+compare_pairs "a.txt:b.txt"
