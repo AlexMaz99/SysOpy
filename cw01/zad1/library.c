@@ -96,7 +96,7 @@ struct Block* createBlockAndOperations(char *tmp, int numberOfOperations){
     fclose(f);
     return block;
   }
-  char operation[256];
+  char operation[100000];
   strcpy(operation,"");
   int i = 0;
   while(getline(&line, &len, f) != -1){
