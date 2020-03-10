@@ -105,7 +105,7 @@ struct Block* createBlockAndOperations(char *tmp, int numberOfOperations){
   while(getline(&line, &len, f) != -1){
     if(line[0] >= '0' && line[0] <= '9'){
       if(strcmp(operation, "") != 0){
-        block -> operations[i]=(char*)calloc(strlen(operation), sizeof(char));
+        block -> operations[i]=(char*)calloc(10000, sizeof(char));
         strcpy(block -> operations[i], operation);
         //printf("%s\n\n", operation);
         i++;
@@ -116,7 +116,7 @@ struct Block* createBlockAndOperations(char *tmp, int numberOfOperations){
   }
 
   if(strcmp(operation, "") != 0){ //last editing operation
-    block -> operations[i]=(char*)calloc(strlen(operation), sizeof(char));
+    block -> operations[i]=(char*)calloc(10000, sizeof(char));
     strcpy(block -> operations[i], operation);
     //printf("%s\n\n", operation);
   }
