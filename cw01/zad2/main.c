@@ -57,7 +57,7 @@ int main(int argc, char**argv) {
         startTimer();
         
         if (!strcmp(argv[i], "compare_pairs")){
-            comparePairs(argv[i+1], numberOfBlocks * 2, mainArray);
+            comparePairs(argv[i+1], mainArray);
             i += 2;
             operation = "compare_pairs";
         }
@@ -76,9 +76,10 @@ int main(int argc, char**argv) {
         }
         else{
             operation = "wrong operation";
+            i ++;
         }
         writeResultToFile(resultFile, operation);
     }
-    deleteArray(mainArray);
+    //deleteArray(mainArray);
     return 0;
 }

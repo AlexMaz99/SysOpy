@@ -30,7 +30,9 @@ struct Block* createBlockAndOperations(char *tmp, int numberOfOperations);
 
 void definePairSequence(char* files, char**newFiles);
 
-void comparePairs(char *filesInString, int size, struct MainArray *mainArray);
+void comparePairs(char *filesInString, struct MainArray *mainArray);
+
+int countNumberOfFiles(char* filesInString);
 
 int getNumberOfOperations(struct MainArray* mainArray, int indexOfBlock);
 

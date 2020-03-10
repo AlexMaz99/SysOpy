@@ -1,2 +1,16 @@
-create_table 1
-compare_pairs "a.txt:b.txt"
+create_table 60
+compare_pairs "a.txt:b.txt o.txt:u.txt a.txt:o.txt b.txt:u.txt b.txt:o.txt a.txt:u.txt e.txt:f.txt m.txt:n.txt n.txt:o.txt e.txt:f.txt h.txt:i.txt k.txt:l.txt a.txt:h.txt j.txt:u.txt u.txt:u.txt"
+remove_block 0
+remove_block 2
+compare_pairs "a.txt:b.txt a.txt:a.txt b.txt:b.txt"
+remove_operation 3 0
+remove_block 5
+remove_operation 6 0
+compare_pairs "o.txt:a.txt a.txt:u.txt b.txt:m.txt k.txt:k.txt"
+remove_operation 7 0
+remove_block 1
+remove_block 8
+compare_pairs "k.txt:l.txt"
+remove_operation 4 0
+remove_block 4
+remove_block 9

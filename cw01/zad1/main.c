@@ -5,10 +5,9 @@
 #include <ctype.h>
 
 int main(){
-    struct MainArray* mainArray = createArray(3);
-    int size = 6;
+    struct MainArray* mainArray = createArray(10);
 
-    comparePairs("a.txt:b.txt c.txt:d.txt e.txt:f.txt", size, mainArray);
+    comparePairs("a.txt:b.txt c.txt:d.txt e.txt:f.txt", mainArray);
 
     printf("%d\n\n", mainArray->blocks[0]->numberOfOperations);
     printf("%s\n\n", mainArray->blocks[0]->operations[0]);
@@ -21,10 +20,19 @@ int main(){
     
     deleteBlock(mainArray, 0);
     if (mainArray -> blocks[0] == NULL) printf("block 0 deleted\n");
-    deleteBlock(mainArray, 1);
-    if (mainArray -> blocks[1] == NULL) printf("block 1 deleted\n");
+    //deleteBlock(mainArray, 1);
+    //if (mainArray -> blocks[1] == NULL) printf("block 1 deleted\n");
     deleteBlock(mainArray, 2);
     if (mainArray -> blocks[2] == NULL) printf("block 2 deleted\n");
+
+    comparePairs("a.txt:c.txt", mainArray);
+    if (mainArray -> blocks[1] != NULL) printf("block 1\n");
+    comparePairs("c.txt:f.txt", mainArray);
+    if (mainArray -> blocks[2]!= NULL) printf("block 2");
+    deleteBlock(mainArray, 0);
+    deleteBlock(mainArray, 1);
+    deleteBlock(mainArray, 2);
+    deleteArray(mainArray);
 
     return 0;
 }

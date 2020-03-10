@@ -9,7 +9,7 @@
 struct MainArray* createArray(int numberOfBlocks){
     if (numberOfBlocks <= 0) return NULL;
     struct MainArray *mainArray= (struct MainArray*)calloc(1,sizeof(struct MainArray));
-    mainArray -> numberOfBlocks = 0;
+    mainArray -> numberOfBlocks = numberOfBlocks;
     mainArray -> blocks = (struct Block**)calloc(numberOfBlocks, sizeof(struct Block*));
     return mainArray;
 }
@@ -26,40 +26,43 @@ struct Block *createBlock(int numberOfOperations){
 
 //usuwanie bloku o danym indeksie
 void deleteBlock(struct MainArray* mainArray, int index){
-    if(index < 0 || mainArray == NULL || mainArray -> blocks[index] == NULL) return;
+    if(mainArray -> numberOfBlocks <= index || index < 0 || mainArray == NULL || mainArray -> blocks == NULL || mainArray -> blocks[index] == NULL) return;
     for(int i = 0; i < mainArray -> blocks[index] -> numberOfOperations; i++){
-        free(mainArray -> blocks[index] -> operations[i]);
-        mainArray -> blocks[index] -> operations[i] = NULL;
+        if (mainArray -> blocks[index] -> operations[i] != NULL){
+          free(mainArray -> blocks[index] -> operations[i]);
+          mainArray -> blocks[index] -> operations[i] = NULL;
+        }
     }
-    free(mainArray -> blocks[index] -> operations);
-    mainArray -> blocks[index] -> operations = NULL;
-    free(mainArray -> blocks[index]);
-    mainArray -> blocks[index] = NULL;
+    // free(mainArray -> blocks[index] -> operations);
+    // mainArray -> blocks[index] -> operations = NULL;
+    if (mainArray -> blocks[index] != NULL){
+      //free(mainArray -> blocks[index]);
+      mainArray -> blocks[index] = NULL;
+    }
 
 }
 
 //usuwanie operacji o danym indeksie z bloku o danym indeksie
 void deleteOperation(struct MainArray* mainArray, int block_index, int operation_index){
+    if (mainArray -> blocks[block_index] -> operations[operation_index] == NULL) return;
     free(mainArray -> blocks[block_index] -> operations[operation_index]);
     mainArray -> blocks[block_index] -> operations[operation_index] = NULL;
-    int numberOfOperations = mainArray -> blocks[block_index] -> numberOfOperations;
-    if (numberOfOperations - 1 <= 0) deleteBlock(mainArray, block_index);
-    else mainArray -> blocks[block_index] -> numberOfOperations = numberOfOperations - 1;
 }
 
 //usuwanie tablicy głównej
 void deleteArray(struct MainArray* mainArray){
+    if (mainArray == NULL) return;
     for (int i = 0; i < mainArray -> numberOfBlocks; i++){
         deleteBlock(mainArray, i);
     }
-    free(mainArray -> blocks);
-    free(mainArray);
+    //free(mainArray -> blocks);
+    //free(mainArray);
 }
 
 //porównanie dwóch plików poleceniem diff i zapisanie wyniku do pliku tymczasowego
 void compareTwoFiles(char* file1, char*file2){
     system("touch tmp.txt");
-    char tmp[12 + strlen(file1) + strlen(file2)];
+    char tmp[50 + strlen(file1) + strlen(file2)];
     strcpy(tmp, "diff ");
     strcat(tmp, file1);
     strcat(tmp, " ");
@@ -150,13 +153,24 @@ void definePairSequence(char* files, char**newFiles)
     }
 }
 
+int countNumberOfFiles(char* filesInString){
+  int numberOfFiles = 0;
+  char*string = strdup(filesInString);
+  char*token = strtok(string, " ");
+  while(token!=NULL){
+    token = strtok(NULL, " ");
+    numberOfFiles ++;
+  }
+  return 2 * numberOfFiles;
+}
+
 //porównanie wszystkich par plików i utworzenie odpowiednich struktur
-void comparePairs(char *filesInString, int size, struct MainArray *mainArray){
+void comparePairs(char *filesInString, struct MainArray *mainArray){
+  int size = countNumberOfFiles(filesInString);
   if (size%2 != 0) exit(0);
   char** files = (char**)calloc(size, sizeof(char*));
   definePairSequence(filesInString, files);
 
-  int index = 0;
   for (int i = 0; i< size-1; i+=2){
     compareTwoFiles(files[i], files[i+1]);
     int numberOfOperations = countOperationsInBlock(files[i], files[i+1]);
@@ -164,9 +178,12 @@ void comparePairs(char *filesInString, int size, struct MainArray *mainArray){
   
     system("rm tmp.txt");
 
-    mainArray -> blocks[index] = block;
-    index ++;
-    mainArray -> numberOfBlocks++;
+    for(int i =0 ; i<mainArray->numberOfBlocks;i++){
+      if(mainArray->blocks[i]==NULL){
+        mainArray -> blocks[i] = block;
+      break;
+      }
+    }
   }
 }
 
