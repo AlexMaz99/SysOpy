@@ -1,5 +1,6 @@
 create_table 60
 compare_pairs "a.txt:b.txt o.txt:u.txt a.txt:o.txt b.txt:u.txt b.txt:o.txt a.txt:u.txt e.txt:f.txt m.txt:n.txt n.txt:o.txt e.txt:f.txt h.txt:i.txt k.txt:l.txt a.txt:h.txt j.txt:u.txt u.txt:u.txt"
+compare_pairs "a.txt:b.txt"
 remove_block 0
 remove_block 2
 compare_pairs "a.txt:b.txt a.txt:a.txt b.txt:b.txt"
@@ -14,3 +15,11 @@ compare_pairs "k.txt:l.txt"
 remove_operation 4 0
 remove_block 4
 remove_block 9
+compare_pairs "a.txt:b.txt"
+compare_pairs "a.txt:b.txt o.txt:u.txt a.txt:o.txt b.txt:u.txt b.txt:o.txt a.txt:u.txt e.txt:f.txt m.txt:n.txt n.txt:o.txt e.txt:f.txt h.txt:i.txt k.txt:l.txt a.txt:h.txt j.txt:u.txt u.txt:u.txt"
+remove_block 11
+compare_pairs "o.txt:a.txt a.txt:k.txt n.txt:m.txt i.txt:l.txt"
+remove_operation 12 0
+remove_operation 13 0
+remove_block 14
+compare_pairs "o.txt:a.txt a.txt:k.txt n.txt:m.txt i.txt:l.txt a.txt:b.txt o.txt:u.txt a.txt:o.txt b.txt:u.txt b.txt:o.txt a.txt:u.txt e.txt:f.txt m.txt:n.txt n.txt:o.txt e.txt:f.txt h.txt:i.txt k.txt:l.txt a.txt:h.txt j.txt:u.txt u.txt:u.txt"

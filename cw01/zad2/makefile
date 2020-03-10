@@ -4,7 +4,7 @@ LIB_NAME = lib_diff
 LIB_PATH = ../zad1
 REPORT_FILE = raport2.txt
 
-static:
+static: main.c
 	$(CC) $(FLAGS)  main.c -o main -I$(LIB_PATH) $(LIB_PATH)/$(LIB_NAME).a
 
 shared:

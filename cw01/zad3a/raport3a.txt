@@ -1,0 +1,227 @@
+static:
+Operation: compare_pairs
+Real time: 0.200000
+User time: 0.000000
+System time: 0.000000
+
+Operation: remove_block
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000
+
+Operation: remove_block
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000
+
+Operation: compare_pairs
+Real time: 0.030000
+User time: 0.000000
+System time: 0.000000
+
+Operation: remove_operation
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000
+
+Operation: remove_block
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000
+
+Operation: remove_operation
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000
+
+Operation: compare_pairs
+Real time: 0.050000
+User time: 0.000000
+System time: 0.000000
+
+Operation: remove_operation
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000
+
+Operation: remove_block
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000
+
+Operation: remove_block
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000
+
+Operation: compare_pairs
+Real time: 0.010000
+User time: 0.000000
+System time: 0.000000
+
+Operation: remove_operation
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000
+
+Operation: remove_block
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000
+
+Operation: remove_block
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000
+
+shared:
+Operation: compare_pairs
+Real time: 0.190000
+User time: 0.000000
+System time: 0.000000
+
+Operation: remove_block
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000
+
+Operation: remove_block
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000
+
+Operation: compare_pairs
+Real time: 0.040000
+User time: 0.000000
+System time: 0.000000
+
+Operation: remove_operation
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000
+
+Operation: remove_block
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000
+
+Operation: remove_operation
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000
+
+Operation: compare_pairs
+Real time: 0.050000
+User time: 0.000000
+System time: 0.000000
+
+Operation: remove_operation
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000
+
+Operation: remove_block
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000
+
+Operation: remove_block
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000
+
+Operation: compare_pairs
+Real time: 0.010000
+User time: 0.000000
+System time: 0.000000
+
+Operation: remove_operation
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000
+
+Operation: remove_block
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000
+
+Operation: remove_block
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000
+
+dynamic:
+Operation: compare_pairs
+Real time: 0.180000
+User time: 0.000000
+System time: 0.000000
+
+Operation: remove_block
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000
+
+Operation: remove_block
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000
+
+Operation: compare_pairs
+Real time: 0.050000
+User time: 0.000000
+System time: 0.000000
+
+Operation: remove_operation
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000
+
+Operation: remove_block
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000
+
+Operation: remove_operation
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000
+
+Operation: compare_pairs
+Real time: 0.050000
+User time: 0.000000
+System time: 0.000000
+
+Operation: remove_operation
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000
+
+Operation: remove_block
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000
+
+Operation: remove_block
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000
+
+Operation: compare_pairs
+Real time: 0.010000
+User time: 0.000000
+System time: 0.000000
+
+Operation: remove_operation
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000
+
+Operation: remove_block
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000
+
+Operation: remove_block
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000

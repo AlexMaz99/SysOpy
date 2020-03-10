@@ -16,6 +16,7 @@ clean:
 	rm -f *.o
 
 clean_all:
+	make clean
 	rm main $(LIB_NAME).a $(LIB_NAME).so
 
 2static:

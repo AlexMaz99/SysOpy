@@ -5,7 +5,7 @@
 #include <ctype.h>
 
 
-//tworzenie tablicy głównej
+//create main array
 struct MainArray* createArray(int numberOfBlocks){
     if (numberOfBlocks <= 0) return NULL;
     struct MainArray *mainArray= (struct MainArray*)calloc(1,sizeof(struct MainArray));
@@ -14,7 +14,7 @@ struct MainArray* createArray(int numberOfBlocks){
     return mainArray;
 }
 
-//tworzenie bloku
+//create Block
 struct Block *createBlock(int numberOfOperations){
   if(numberOfOperations < 0) return NULL;
   struct Block * block=(struct Block*)calloc(1,sizeof(struct Block));
@@ -24,7 +24,7 @@ struct Block *createBlock(int numberOfOperations){
   return block;
 }
 
-//usuwanie bloku o danym indeksie
+//delete block at index
 void deleteBlock(struct MainArray* mainArray, int index){
     if(mainArray -> numberOfBlocks <= index || index < 0 || mainArray == NULL || mainArray -> blocks == NULL || mainArray -> blocks[index] == NULL) return;
     for(int i = 0; i < mainArray -> blocks[index] -> numberOfOperations; i++){
@@ -33,33 +33,30 @@ void deleteBlock(struct MainArray* mainArray, int index){
           mainArray -> blocks[index] -> operations[i] = NULL;
         }
     }
-    // free(mainArray -> blocks[index] -> operations);
-    // mainArray -> blocks[index] -> operations = NULL;
     if (mainArray -> blocks[index] != NULL){
-      //free(mainArray -> blocks[index]);
+      free(mainArray -> blocks[index]);
       mainArray -> blocks[index] = NULL;
     }
 
 }
 
-//usuwanie operacji o danym indeksie z bloku o danym indeksie
+//delete operation at index from block at index
 void deleteOperation(struct MainArray* mainArray, int block_index, int operation_index){
     if (mainArray -> blocks[block_index] -> operations[operation_index] == NULL) return;
     free(mainArray -> blocks[block_index] -> operations[operation_index]);
     mainArray -> blocks[block_index] -> operations[operation_index] = NULL;
 }
 
-//usuwanie tablicy głównej
+//delete main array
 void deleteArray(struct MainArray* mainArray){
     if (mainArray == NULL) return;
     for (int i = 0; i < mainArray -> numberOfBlocks; i++){
         deleteBlock(mainArray, i);
     }
-    //free(mainArray -> blocks);
-    //free(mainArray);
+    free(mainArray);
 }
 
-//porównanie dwóch plików poleceniem diff i zapisanie wyniku do pliku tymczasowego
+//compare two files with diff command
 void compareTwoFiles(char* file1, char*file2){
     system("touch tmp.txt");
     char tmp[50 + strlen(file1) + strlen(file2)];
@@ -71,7 +68,7 @@ void compareTwoFiles(char* file1, char*file2){
     system(tmp);
 }
 
-//obliczenie ilości operacji dla danych dwóch plików
+//count operations in block for two files
 int countOperationsInBlock(char *file1, char *file2){
   char command[20 + strlen(file1) + strlen(file2)];
   strcpy(command, "diff ");
@@ -86,7 +83,7 @@ int countOperationsInBlock(char *file1, char *file2){
   return counter;
 }
 
-//stworzenie bloku i operacji dla zawartości pliku tmp.txt
+//create block and operations for file tmp.txt
 struct Block* createBlockAndOperations(char *tmp, int numberOfOperations){
   FILE *f = fopen(tmp, "r");
   if(f == NULL)  exit(0);
@@ -107,7 +104,6 @@ struct Block* createBlockAndOperations(char *tmp, int numberOfOperations){
       if(strcmp(operation, "") != 0){
         block -> operations[i]=(char*)calloc(10000, sizeof(char));
         strcpy(block -> operations[i], operation);
-        //printf("%s\n\n", operation);
         i++;
         strcpy(operation ,"");
       }
@@ -118,7 +114,6 @@ struct Block* createBlockAndOperations(char *tmp, int numberOfOperations){
   if(strcmp(operation, "") != 0){ //last editing operation
     block -> operations[i]=(char*)calloc(10000, sizeof(char));
     strcpy(block -> operations[i], operation);
-    //printf("%s\n\n", operation);
   }
 
   fclose(f);
@@ -126,9 +121,9 @@ struct Block* createBlockAndOperations(char *tmp, int numberOfOperations){
   return block;
 }
 
-//zamiana stringa z plikami na tablicę stringów
-void definePairSequence(char* files, char**newFiles)
-{ // file1A.txt:file1B.txt file2A.txt:file2B.txt
+//conversion string with files to array with files
+void definePairSequence(char* files, char**newFiles) // file1A.txt:file1B.txt file2A.txt:file2B.txt
+{ 
 
     if(files == NULL || strlen(files) == 0) exit (0); 
     char *filesCpy = calloc(strlen(files), sizeof(char));
@@ -153,6 +148,7 @@ void definePairSequence(char* files, char**newFiles)
     }
 }
 
+// count number of files in string
 int countNumberOfFiles(char* filesInString){
   int numberOfFiles = 0;
   char*string = strdup(filesInString);
@@ -164,7 +160,7 @@ int countNumberOfFiles(char* filesInString){
   return 2 * numberOfFiles;
 }
 
-//porównanie wszystkich par plików i utworzenie odpowiednich struktur
+//compare every pair of files and create structures
 void comparePairs(char *filesInString, struct MainArray *mainArray){
   int size = countNumberOfFiles(filesInString);
   if (size%2 != 0) exit(0);
@@ -187,38 +183,13 @@ void comparePairs(char *filesInString, struct MainArray *mainArray){
   }
 }
 
-//liczba operacji dla bloku o danym indeksie
+//number of operations for block at index
 int getNumberOfOperations(struct MainArray* mainArray, int indexOfBlock){
   if (mainArray == NULL || mainArray -> blocks[indexOfBlock] == NULL) return 0;
   return mainArray -> blocks[indexOfBlock] -> numberOfOperations;
 }
 
-//operacja o danym indeksie z danego bloku
+//operations at index from block at index
 char* getOperation(struct MainArray* mainArray, int indexOfBlock, int indexOfOperation){
   return mainArray -> blocks[indexOfBlock] -> operations[indexOfOperation];
 }
-
-// int main(){
-//     struct MainArray* mainArray = createArray(3);
-//     int size = 6;
-
-//     comparePairs("a.txt:b.txt c.txt:d.txt e.txt:f.txt", size, mainArray);
-
-//     printf("%d\n\n", mainArray->blocks[0]->numberOfOperations);
-//     printf("%s\n\n", mainArray->blocks[0]->operations[0]);
-//     printf("%s\n\n", mainArray->blocks[0]->operations[1]);
-//     printf("%s\n\n", mainArray->blocks[0]->operations[2]);
-//     printf("%d\n\n", mainArray->blocks[1]->numberOfOperations);
-//     printf("%s\n\n", mainArray->blocks[1]->operations[0]);
-//     printf("%s\n\n", mainArray->blocks[1]->operations[1]);
-//     printf("%s\n\n", mainArray->blocks[1]->operations[2]);
-    
-//     deleteBlock(mainArray, 0);
-//     if (mainArray -> blocks[0] == NULL) printf("block 0 deleted\n");
-//     deleteBlock(mainArray, 1);
-//     if (mainArray -> blocks[1] == NULL) printf("block 1 deleted\n");
-//     deleteBlock(mainArray, 2);
-//     if (mainArray -> blocks[2] == NULL) printf("block 2 deleted\n");
-
-//     return 0;
-// }

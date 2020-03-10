@@ -80,6 +80,6 @@ int main(int argc, char**argv) {
         }
         writeResultToFile(resultFile, operation);
     }
-    //deleteArray(mainArray);
+    deleteArray(mainArray);
     return 0;
 }
