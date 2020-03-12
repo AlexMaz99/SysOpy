@@ -28,7 +28,7 @@ dynamic_mainO:
 
 clean_all:
 	make clean
-	rm -rf main raport2.txt
+	rm -rf main raport3b.txt
 	rm -f main_dyn
 
 test:

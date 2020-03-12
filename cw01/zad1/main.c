@@ -20,8 +20,6 @@ int main(){
     
     deleteBlock(mainArray, 0);
     if (mainArray -> blocks[0] == NULL) printf("block 0 deleted\n");
-    //deleteBlock(mainArray, 1);
-    //if (mainArray -> blocks[1] == NULL) printf("block 1 deleted\n");
     deleteBlock(mainArray, 2);
     if (mainArray -> blocks[2] == NULL) printf("block 2 deleted\n");
 
@@ -29,6 +27,7 @@ int main(){
     if (mainArray -> blocks[1] != NULL) printf("block 1\n");
     comparePairs("c.txt:f.txt", mainArray);
     if (mainArray -> blocks[2]!= NULL) printf("block 2");
+    
     deleteBlock(mainArray, 0);
     deleteBlock(mainArray, 1);
     deleteBlock(mainArray, 2);

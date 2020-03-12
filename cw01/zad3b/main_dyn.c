@@ -49,27 +49,13 @@ int main(int argc, char**argv) {
     void (*deleteBlock)();
     void (*deleteOperation)();
     void (*deleteArray)();
-    // void (*compareTwoFiles)();
-    // int (*countOperationsInBlock)();
-    // struct Block* (*createBlockAndOperations)();
-    // void (*definePairSequence)();
     void (*comparePairs)();
-    // int (*countNumberOfFiles)();
-    // int (*getNumberOfOperations)();
-    // char* (*getOperation)();
     
     createArray = dlsym(handle, "createArray");
     deleteBlock = dlsym(handle, "deleteBlock");
     deleteOperation = dlsym(handle, "deleteOperation");
     deleteArray = dlsym(handle, "deleteArray");
-    // compareTwoFiles = dlsym(handle, "compareTwoFiles");
-    // countOperationsInBlock = dlsym(handle, "countOperationsInBlock");
-    // createBlockAndOperations = dlsym(handle, "createBlockAndOperations");
-    // definePairSequence = dlsym(handle, "definePairSequence");
     comparePairs = dlsym(handle, "comparePairs");
-    // countNumberOfFiles = dlsym(handle, "countNumberOfFiles");
-    // getNumberOfOperations = dlsym(handle, "getNumberOfOperations");
-    // getOperation = dlsym(handle, "getOperation");
 
     if (argc < 3){
         printf("Number of argument must be at least 3");
