@@ -10,7 +10,7 @@
 
 clock_t startTime, endTime;
 struct tms startCpu, endCpu;
-
+FILE *resultFile;
 
 void startTimer(){
     startTime = times(&startCpu);
@@ -115,15 +115,6 @@ void copy_sys(char* sourceFile, char* destinationFile, int numberOfRecords, int 
     close(source);
     close(destination);
     free(tmp);
-}
-
-void copy(char* sourceFile, char* destinationFile, int numberOfRecords, int length, int lib){
-    if (lib == 1){
-        copy_lib(sourceFile, destinationFile, numberOfRecords, length);
-    }
-    else {
-        copy_sys(sourceFile, destinationFile, numberOfRecords, length);
-    }
 }
 
 void swap_lines_lib(FILE * file, int i, int j, int length){
@@ -246,9 +237,105 @@ void sort(char* file, int numberOfRecords, int length, int lib){
 
 }
 
-int main(int argc, char** argv){
-    generate("wyniki.txt", 100, 8);
-    sort("wyniki.txt", 100, 8, 0);
+void exec_generate(int argc, char** argv, int i){
+    if (i + 3 > argc){
+        fprintf(stderr, "Wrong arguments in generate command");
+        exit(-1);
+    }
 
+    char*file = argv[i + 1];
+    int numberOfRecords = atoi(argv[i + 2]);
+    int length = atoi(argv[i + 3]);
+    generate(file, numberOfRecords, length);
+}
+
+void exec_sort(int argc, char** argv, int i){
+    if (i + 4 >= argc){
+        fprintf(stderr, "Wrong arguments in sort command");
+        exit(-1);
+    }
+
+    char* file = argv[i + 1];
+    int numberOfRecords = atoi(argv[i + 2]);
+    int length = atoi(argv[i + 3]);
+    char* lib_sys = argv[i + 4];
+    char operation[64];
+    snprintf(operation, sizeof operation,"sort %s, records: %d, bytes: %d", lib_sys, numberOfRecords, length);
+    
+    if (!strcmp(lib_sys, "lib")){
+        startTimer();
+        sort(file, numberOfRecords, length, 1);
+        writeResultToFile(resultFile, operation);
+    }
+    else if (!strcmp(lib_sys, "sys")){
+        startTimer();
+        sort(file, numberOfRecords, length, 0);
+        writeResultToFile(resultFile, operation);
+    }
+    else{
+        fprintf(stderr, "Wrong argument in sort command");
+        exit(-1);
+    }
+
+}
+
+void exec_copy(int argc, char** argv, int i){
+    if (i + 5 >= argc){
+        fprintf(stderr, "Wrong arguments in copy command");
+        exit(-1);
+    }
+    char* source = argv[i + 1];
+    char* destination = argv[i + 2];
+    int numberOfRecords = atoi(argv[i + 3]);
+    int length = atoi(argv[i + 4]);
+    char* lib_sys = argv[i + 5];
+
+    char operation[64];
+    snprintf(operation, sizeof operation,"copy %s, records: %d, bytes: %d", lib_sys, numberOfRecords, length);
+
+    if (!strcmp(lib_sys, "lib")){
+        startTimer();
+        copy_lib(source, destination, numberOfRecords, length);
+        writeResultToFile(resultFile, operation);
+    }
+    else if (!strcmp(lib_sys, "sys")){
+        startTimer();
+        copy_sys(source, destination, numberOfRecords, length);
+        writeResultToFile(resultFile, operation);
+    }
+}
+
+int main(int argc, char** argv){
+
+    if (argc < 5){
+        printf("Number of argument must be at least 5");
+        return -1;
+    }
+
+    char* file = "wyniki.txt";
+    resultFile = fopen(file, "a");
+    if (resultFile == NULL){
+        exit(-1);
+    }
+    int i = 1;
+    while (i < argc){
+        if (!strcmp(argv[i], "generate")){
+            exec_generate(argc, argv, i);
+            i += 4;
+        }
+        else if (!strcmp(argv[i], "sort")){
+            exec_sort(argc, argv, i);
+            i += 5;
+        }
+        else if (!strcmp(argv[i], "copy")){
+            exec_copy(argc, argv, i);
+            i += 6;
+        }
+        else{
+            printf("Wrong command");
+            i++;
+        }
+    }
+    fclose(resultFile);
     return 0;
 }

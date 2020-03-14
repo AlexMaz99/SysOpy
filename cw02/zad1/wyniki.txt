@@ -1,0 +1,364 @@
+Operation: copy lib, records: 1000, bytes: 1
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000
+
+Operation: copy sys, records: 1000, bytes: 1
+Real time: 0.010000
+User time: 0.000000
+System time: 0.000000
+
+Operation: copy lib, records: 5000, bytes: 1
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000
+
+Operation: copy sys, records: 5000, bytes: 1
+Real time: 0.030000
+User time: 0.000000
+System time: 0.010000
+
+Operation: copy lib, records: 10000, bytes: 1
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000
+
+Operation: copy sys, records: 10000, bytes: 1
+Real time: 0.040000
+User time: 0.000000
+System time: 0.020000
+
+Operation: copy lib, records: 1000, bytes: 4
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000
+
+Operation: copy sys, records: 1000, bytes: 4
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000
+
+Operation: copy lib, records: 5000, bytes: 4
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000
+
+Operation: copy sys, records: 5000, bytes: 4
+Real time: 0.030000
+User time: 0.000000
+System time: 0.010000
+
+Operation: copy lib, records: 10000, bytes: 4
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000
+
+Operation: copy sys, records: 10000, bytes: 4
+Real time: 0.060000
+User time: 0.000000
+System time: 0.020000
+
+Operation: copy lib, records: 1000, bytes: 512
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000
+
+Operation: copy sys, records: 1000, bytes: 512
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000
+
+Operation: copy lib, records: 5000, bytes: 512
+Real time: 0.010000
+User time: 0.000000
+System time: 0.000000
+
+Operation: copy sys, records: 5000, bytes: 512
+Real time: 0.030000
+User time: 0.000000
+System time: 0.010000
+
+Operation: copy lib, records: 10000, bytes: 512
+Real time: 0.020000
+User time: 0.000000
+System time: 0.000000
+
+Operation: copy sys, records: 10000, bytes: 512
+Real time: 0.060000
+User time: 0.000000
+System time: 0.030000
+
+Operation: copy lib, records: 1000, bytes: 1024
+Real time: 0.000000
+User time: 0.000000
+System time: 0.000000
+
+Operation: copy sys, records: 1000, bytes: 1024
+Real time: 0.010000
+User time: 0.000000
+System time: 0.000000
+
+Operation: copy lib, records: 5000, bytes: 1024
+Real time: 0.020000
+User time: 0.000000
+System time: 0.000000
+
+Operation: copy sys, records: 5000, bytes: 1024
+Real time: 0.040000
+User time: 0.000000
+System time: 0.010000
+
+Operation: copy lib, records: 10000, bytes: 1024
+Real time: 0.030000
+User time: 0.000000
+System time: 0.010000
+
+Operation: copy sys, records: 10000, bytes: 1024
+Real time: 0.060000
+User time: 0.000000
+System time: 0.030000
+
+Operation: copy lib, records: 1000, bytes: 4096
+Real time: 0.010000
+User time: 0.000000
+System time: 0.000000
+
+Operation: copy sys, records: 1000, bytes: 4096
+Real time: 0.020000
+User time: 0.000000
+System time: 0.000000
+
+Operation: copy lib, records: 5000, bytes: 4096
+Real time: 0.060000
+User time: 0.000000
+System time: 0.020000
+
+Operation: copy sys, records: 5000, bytes: 4096
+Real time: 0.060000
+User time: 0.000000
+System time: 0.020000
+
+Operation: copy lib, records: 10000, bytes: 4096
+Real time: 0.140000
+User time: 0.010000
+System time: 0.050000
+
+Operation: copy sys, records: 10000, bytes: 4096
+Real time: 0.120000
+User time: 0.000000
+System time: 0.050000
+
+Operation: copy lib, records: 1000, bytes: 8192
+Real time: 0.020000
+User time: 0.000000
+System time: 0.010000
+
+Operation: copy sys, records: 1000, bytes: 8192
+Real time: 0.010000
+User time: 0.000000
+System time: 0.000000
+
+Operation: copy lib, records: 5000, bytes: 8192
+Real time: 0.120000
+User time: 0.000000
+System time: 0.050000
+
+Operation: copy sys, records: 5000, bytes: 8192
+Real time: 0.110000
+User time: 0.000000
+System time: 0.040000
+
+Operation: copy lib, records: 10000, bytes: 8192
+Real time: 0.220000
+User time: 0.010000
+System time: 0.090000
+
+Operation: copy sys, records: 10000, bytes: 8192
+Real time: 0.220000
+User time: 0.000000
+System time: 0.080000
+
+Operation: sort lib, records: 1000, bytes: 1
+Real time: 0.080000
+User time: 0.010000
+System time: 0.020000
+
+Operation: sort sys, records: 1000, bytes: 1
+Real time: 0.070000
+User time: 0.010000
+System time: 0.020000
+
+Operation: sort lib, records: 5000, bytes: 1
+Real time: 0.600000
+User time: 0.110000
+System time: 0.180000
+
+Operation: sort sys, records: 5000, bytes: 1
+Real time: 0.730000
+User time: 0.110000
+System time: 0.250000
+
+Operation: sort lib, records: 10000, bytes: 1
+Real time: 1.570000
+User time: 0.340000
+System time: 0.430000
+
+Operation: sort sys, records: 10000, bytes: 1
+Real time: 2.280000
+User time: 0.250000
+System time: 0.860000
+
+Operation: sort lib, records: 1000, bytes: 4
+Real time: 0.110000
+User time: 0.020000
+System time: 0.030000
+
+Operation: sort sys, records: 1000, bytes: 4
+Real time: 0.100000
+User time: 0.010000
+System time: 0.030000
+
+Operation: sort lib, records: 5000, bytes: 4
+Real time: 0.740000
+User time: 0.110000
+System time: 0.240000
+
+Operation: sort sys, records: 5000, bytes: 4
+Real time: 0.640000
+User time: 0.080000
+System time: 0.230000
+
+Operation: sort lib, records: 10000, bytes: 4
+Real time: 1.590000
+User time: 0.250000
+System time: 0.540000
+
+Operation: sort sys, records: 10000, bytes: 4
+Real time: 1.330000
+User time: 0.160000
+System time: 0.500000
+
+Operation: sort lib, records: 1000, bytes: 512
+Real time: 0.120000
+User time: 0.020000
+System time: 0.030000
+
+Operation: sort sys, records: 1000, bytes: 512
+Real time: 0.090000
+User time: 0.000000
+System time: 0.040000
+
+Operation: sort lib, records: 5000, bytes: 512
+Real time: 0.770000
+User time: 0.110000
+System time: 0.270000
+
+Operation: sort sys, records: 5000, bytes: 512
+Real time: 0.550000
+User time: 0.060000
+System time: 0.200000
+
+Operation: sort lib, records: 10000, bytes: 512
+Real time: 1.950000
+User time: 0.250000
+System time: 0.710000
+
+Operation: sort sys, records: 10000, bytes: 512
+Real time: 1.360000
+User time: 0.170000
+System time: 0.500000
+
+Operation: sort lib, records: 1000, bytes: 1024
+Real time: 0.150000
+User time: 0.020000
+System time: 0.050000
+
+Operation: sort sys, records: 1000, bytes: 1024
+Real time: 0.090000
+User time: 0.010000
+System time: 0.030000
+
+Operation: sort lib, records: 5000, bytes: 1024
+Real time: 1.040000
+User time: 0.180000
+System time: 0.330000
+
+Operation: sort sys, records: 5000, bytes: 1024
+Real time: 0.650000
+User time: 0.090000
+System time: 0.230000
+
+Operation: sort lib, records: 10000, bytes: 1024
+Real time: 2.100000
+User time: 0.280000
+System time: 0.760000
+
+Operation: sort sys, records: 10000, bytes: 1024
+Real time: 1.370000
+User time: 0.140000
+System time: 0.530000
+
+Operation: sort lib, records: 1000, bytes: 4096
+Real time: 0.260000
+User time: 0.020000
+System time: 0.100000
+
+Operation: sort sys, records: 1000, bytes: 4096
+Real time: 0.130000
+User time: 0.000000
+System time: 0.060000
+
+Operation: sort lib, records: 5000, bytes: 4096
+Real time: 1.750000
+User time: 0.200000
+System time: 0.660000
+
+Operation: sort sys, records: 5000, bytes: 4096
+Real time: 0.840000
+User time: 0.070000
+System time: 0.340000
+
+Operation: sort lib, records: 10000, bytes: 4096
+Real time: 3.390000
+User time: 0.420000
+System time: 1.260000
+
+Operation: sort sys, records: 10000, bytes: 4096
+Real time: 1.650000
+User time: 0.170000
+System time: 0.640000
+
+Operation: sort lib, records: 1000, bytes: 8192
+Real time: 0.340000
+User time: 0.040000
+System time: 0.130000
+
+Operation: sort sys, records: 1000, bytes: 8192
+Real time: 0.180000
+User time: 0.020000
+System time: 0.060000
+
+Operation: sort lib, records: 5000, bytes: 8192
+Real time: 2.150000
+User time: 0.220000
+System time: 0.820000
+
+Operation: sort sys, records: 5000, bytes: 8192
+Real time: 1.030000
+User time: 0.080000
+System time: 0.420000
+
+Operation: sort lib, records: 10000, bytes: 8192
+Real time: 4.730000
+User time: 0.630000
+System time: 1.690000
+
+Operation: sort sys, records: 10000, bytes: 8192
+Real time: 2.300000
+User time: 0.170000
+System time: 0.960000
+
+WNIOSKI:
+Operacje sys są coraz szybsze w stosunku do lib wraz ze zwiększającą się liczbą bajtów w rekordach.
+Z kolei operacje lib są szybsze dla dużej liczby rekordów z małą ilością bajtów.
+Operacje kopiowania zajmują prawie, że zerowy czas w porównaniu do operacji sortowania.
