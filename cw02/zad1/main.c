@@ -3,8 +3,10 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/times.h>
-#include<sys/types.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include <time.h>
+#include <fcntl.h>
 
 clock_t startTime, endTime;
 struct tms startCpu, endCpu;
@@ -59,8 +61,74 @@ void generate(char *path, int numberOfRecords, int length) {
     free(result);
 };
 
+void copy_lib(char* sourceFile, char* destinationFile, int numberOfRecords, int length){
+    FILE *source = fopen(sourceFile, "r");
+    if (source == NULL){
+        fprintf(stderr, "Cannot open source file in function copy_lib\n");
+        exit(-1);
+    }
+    FILE *destination = fopen(destinationFile, "w+");
+    if (destination == NULL){
+        fprintf(stderr, "Cannot open destination file in function copy_lib\n");
+        exit(-1);
+    }
+    char *tmp = malloc(length * sizeof(char));
+
+    for (int i = 0; i < numberOfRecords; i++){
+        if (fread(tmp, sizeof(char), (size_t) (length + 1), source) != length + 1){
+            fprintf(stderr, "Cannot read from source file in function copy_lib\n");
+            exit(-1);
+        }
+        if(fwrite(tmp, sizeof(char), (size_t)(length + 1), destination) != length + 1){
+            fprintf(stderr, "Cannot read from destination file in function copy_lib\n");
+            exit(-1);
+        }
+    }
+    fclose(source);
+    fclose(destination);
+    free(tmp);
+}
+
+void copy_sys(char* sourceFile, char* destinationFile, int numberOfRecords, int length){
+    int source = open(sourceFile, O_RDONLY);
+    if (source < 0){
+        fprintf(stderr, "Cannot open source file in function copy_sys\n");
+        exit(-1);
+    }
+    int destination = open(destinationFile, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR);
+    if (destination < 0){
+        fprintf(stderr, "Cannot open destination file in function copy_sys\n");
+        exit(-1);
+    }
+    char *tmp = malloc(length * sizeof(char));
+
+    for (int i = 0; i < numberOfRecords; i++){
+        if (read(source, tmp, length + 1) < 0){
+            fprintf(stderr, "Cannot read from source file in function copy_sys\n");
+            exit(-1);
+        }
+        if (write(destination, tmp, length + 1) < 0){
+            fprintf(stderr, "Cannot read from destination file in function copy_sys\n");
+            exit(-1);
+        }
+    }
+    close(source);
+    close(destination);
+    free(tmp);
+}
+
+void copy(char* sourceFile, char* destinationFile, int numberOfRecords, int length, int lib){
+    if (lib == 1){
+        copy_lib(sourceFile, destinationFile, numberOfRecords, length);
+    }
+    else {
+        copy_sys(sourceFile, destinationFile, numberOfRecords, length);
+    }
+}
+
 int main(int argc, char** argv){
-    generate("wyniki.txt", 100, 512);
+    generate("wyniki.txt", 100, 8);
+    copy_lib("wyniki.txt", "copy.txt", 50, 4);
 
     return 0;
 }
