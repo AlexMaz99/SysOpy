@@ -146,6 +146,26 @@ void swap_lines_lib(FILE * file, int i, int j, int length){
     free(line2);
 }
 
+void swap_lines_sys(int file, int i, int j, int length){
+    char* line1 = calloc(length + 1, sizeof(char));
+    char* line2 = calloc(length + 1, sizeof(char));
+
+    lseek(file, (length + 1) * i, 0);
+    read(file, line1, length + 1);
+
+    lseek(file, (length + 1) * j, 0);
+    read(file, line2, length + 1);
+
+    lseek(file, (length + 1) * j, 0);
+    write(file, line1, length + 1);
+
+    lseek(file, (length + 1) * i, 0);
+    write(file, line2, length + 1);
+
+    free(line1);
+    free(line2);
+}
+
 int partition_lib(FILE *file, int length, int low, int high){
     char* pivot = calloc(length + 1, sizeof(char));
     fseek(file, (length + 1) * high, 0);
@@ -167,6 +187,27 @@ int partition_lib(FILE *file, int length, int low, int high){
     return (i + 1);
 }
 
+int partition_sys(int file, int length, int low, int high){
+    char* pivot = calloc(length + 1, sizeof(char));
+    lseek(file, (length + 1) * high, 0);
+    read(file, pivot, length + 1);
+    
+    int i = low - 1;
+    char * tmp = calloc(length + 1, sizeof(char));
+    for (int j = low; j < high; j ++){
+        lseek(file, (length + 1) * j, 0);
+        read(file, tmp, length + 1);
+        if (strcmp(tmp, pivot) < 0){
+            i++;
+            swap_lines_sys(file, i, j, length);
+        }
+    }
+    swap_lines_sys(file, i + 1, high, length);
+    free(tmp);
+    free(pivot);
+    return (i + 1);
+}
+
 void quick_sort_lib(FILE *file, int length,  int low, int high){
     if (low < high){
         int pivot = partition_lib(file, length, low, high);
@@ -174,6 +215,15 @@ void quick_sort_lib(FILE *file, int length,  int low, int high){
         quick_sort_lib(file, length, pivot + 1, high);
     }
 }
+
+void quick_sort_sys(int file, int length,  int low, int high){
+    if (low < high){
+        int pivot = partition_sys(file, length, low, high);
+        quick_sort_sys(file, length, low, pivot - 1);
+        quick_sort_sys(file, length, pivot + 1, high);
+    }
+}
+
 void sort(char* file, int numberOfRecords, int length, int lib){
     if (lib == 1){
         FILE *source = fopen(file, "r+");
@@ -190,7 +240,7 @@ void sort(char* file, int numberOfRecords, int length, int lib){
             fprintf(stderr, "Cannot open file in function sort\n");
             exit(-1);
         }
-        //quick_sort_sys(source, length, 0, numberOfRecords - 1);
+        quick_sort_sys(source, length, 0, numberOfRecords - 1);
         close(source);
     }
 
@@ -198,7 +248,7 @@ void sort(char* file, int numberOfRecords, int length, int lib){
 
 int main(int argc, char** argv){
     generate("wyniki.txt", 100, 8);
-    sort("wyniki.txt", 100, 8, 1);
+    sort("wyniki.txt", 100, 8, 0);
 
     return 0;
 }
