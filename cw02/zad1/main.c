@@ -126,9 +126,79 @@ void copy(char* sourceFile, char* destinationFile, int numberOfRecords, int leng
     }
 }
 
+void swap_lines_lib(FILE * file, int i, int j, int length){
+    char* line1 = calloc(length + 1, sizeof(char));
+    char* line2 = calloc(length + 1, sizeof(char));
+
+    fseek(file, (length + 1) * i, 0);
+    fread(line1, sizeof(char), length + 1, file);
+
+    fseek(file, (length + 1) * j, 0);
+    fread(line2, sizeof(char), length + 1, file);
+
+    fseek(file, (length + 1) * j, 0);
+    fwrite(line1, sizeof(char), length + 1, file);
+
+    fseek(file, (length + 1) * i, 0);
+    fwrite(line2, sizeof(char), length + 1, file);
+
+    free(line1);
+    free(line2);
+}
+
+int partition_lib(FILE *file, int length, int low, int high){
+    char* pivot = calloc(length + 1, sizeof(char));
+    fseek(file, (length + 1) * high, 0);
+    fread(pivot, sizeof(char), length + 1, file);
+    
+    int i = low - 1;
+    char * tmp = calloc(length + 1, sizeof(char));
+    for (int j = low; j < high; j ++){
+        fseek(file, (length + 1) * j, 0);
+        fread(tmp, sizeof(char), length + 1, file);
+        if (strcmp(tmp, pivot) < 0){
+            i++;
+            swap_lines_lib(file, i, j, length);
+        }
+    }
+    swap_lines_lib(file, i + 1, high, length);
+    free(tmp);
+    free(pivot);
+    return (i + 1);
+}
+
+void quick_sort_lib(FILE *file, int length,  int low, int high){
+    if (low < high){
+        int pivot = partition_lib(file, length, low, high);
+        quick_sort_lib(file, length, low, pivot - 1);
+        quick_sort_lib(file, length, pivot + 1, high);
+    }
+}
+void sort(char* file, int numberOfRecords, int length, int lib){
+    if (lib == 1){
+        FILE *source = fopen(file, "r+");
+        if (source == NULL){
+            fprintf(stderr, "Cannot open file in function sort\n");
+            exit(-1);
+        }
+        quick_sort_lib(source, length, 0, numberOfRecords - 1);
+        fclose(source);
+    }
+    else {
+        int source = open(file, O_RDWR);
+        if (source < 0){
+            fprintf(stderr, "Cannot open file in function sort\n");
+            exit(-1);
+        }
+        //quick_sort_sys(source, length, 0, numberOfRecords - 1);
+        close(source);
+    }
+
+}
+
 int main(int argc, char** argv){
     generate("wyniki.txt", 100, 8);
-    copy_lib("wyniki.txt", "copy.txt", 50, 4);
+    sort("wyniki.txt", 100, 8, 1);
 
     return 0;
 }
