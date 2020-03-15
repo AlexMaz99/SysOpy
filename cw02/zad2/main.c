@@ -14,7 +14,7 @@
 
 const char format[] = "%Y-%m-%d %H:%M:%S";
 int atime = -1, mtime = -1;
-int max_depth = -1;
+int max_depth = 100000;
 char asign, msign;
 
 void print_results(char* file_path, struct stat *stat){
@@ -65,7 +65,7 @@ int check_conditions(struct stat* dir_stat){
 
 void find_dir(char *path, int depth){
     if (depth > max_depth) return;
-    if (max_depth == 0) return;
+    //if (max_depth == 0) return;
     if (path == NULL) return;
     DIR* dir = opendir(path);
     if (dir == NULL){
@@ -87,14 +87,15 @@ void find_dir(char *path, int depth){
             printf("Cannot lstat file %s: ", new_path);
             exit(EXIT_FAILURE);
         }
-        if (check_conditions(&buffer) == 1){
-            print_results(new_path, &buffer);
-        }
+        
         if (S_ISDIR(buffer.st_mode)){
             if (strcmp(file -> d_name, ".") == 0 || strcmp(file -> d_name, "..") == 0){
                 continue;
             }
-            find_dir(new_path, depth - 1);
+            find_dir(new_path, depth + 1);
+        }
+        if (check_conditions(&buffer) == 1){
+            print_results(new_path, &buffer);
         }
         
     }
@@ -106,6 +107,10 @@ static int find_nftw(const char *fpath, const struct stat *sb, int typeflag, str
     if (check_conditions(sb) == 1){
         print_results(fpath, sb);
     }
+    // else{
+    //     printf("TO NIE:");
+    //     print_results(fpath, sb);
+    // }
     
     return 0;
 }
@@ -156,7 +161,7 @@ int main(int argc, char** argv){
         nftw(path, find_nftw, 10, FTW_PHYS);
     }
     else{
-        find_dir(path, max_depth);
+        find_dir(path, 1);
     }
     return 0;
 
