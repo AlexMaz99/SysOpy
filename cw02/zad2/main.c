@@ -9,6 +9,7 @@
 #include <fcntl.h>
 #include <dirent.h>
 #include <limits.h>
+#define __USE_XOPEN_EXTENDED 1
 #include <ftw.h>
 
 const char format[] = "%Y-%m-%d %H:%M:%S";
@@ -41,7 +42,7 @@ void print_results(char* file_path, struct stat *stat){
 
 }
 
-int check_time(struct stat *dir_stack, int count, char sign, time_t time_from_file){
+int check_time(int count, char sign, time_t time_from_file){
     time_t now;
     struct tm *time_info;
     time(&now);
@@ -49,7 +50,7 @@ int check_time(struct stat *dir_stack, int count, char sign, time_t time_from_fi
     time_t current_date = mktime(time_info);
 
     int diff = difftime(current_date, time_from_file) / 86400; // (24h * 60min * 60s)
-
+    //printf("Diff: %d\n", diff);
     if ((sign == '+' && diff > count) || (sign == '-' && diff < count) || (sign == '=' && diff == count)) 
         return 1;
 
@@ -57,8 +58,8 @@ int check_time(struct stat *dir_stack, int count, char sign, time_t time_from_fi
 }
 
 int check_conditions(struct stat* dir_stat){
-    if (atime != -1 && check_time(dir_stat, atime, asign, dir_stat -> st_atime) == 0) return 0;
-    if (mtime != -1 && check_time(dir_stat, mtime, msign, dir_stat -> st_mtime) == 0) return 0;
+    if (atime != -1 && check_time(atime, asign, dir_stat -> st_atime) == 0) return 0;
+    if (mtime != -1 && check_time(mtime, msign, dir_stat -> st_mtime) == 0) return 0;
     return 1;
 }
 
@@ -79,7 +80,7 @@ void find_dir(char *path, int depth){
         strcpy(new_path, path);
         strcat(new_path, "/");
         strcat(new_path, file -> d_name);
-        printf("File: %s \n", new_path);
+        //printf("File: %s \n", new_path);
         
         struct stat buffer;
         if (lstat(new_path, &buffer) < 0){
@@ -100,8 +101,13 @@ void find_dir(char *path, int depth){
     closedir(dir);
 }
 
-void find_nftw(char *path, int max_depth){
-    // TO DO
+static int find_nftw(const char *fpath, const struct stat *sb, int typeflag, struct FTW *ftwbuf){
+    if (ftwbuf -> level > max_depth) return 1;
+    if (check_conditions(sb) == 1){
+        print_results(fpath, sb);
+    }
+    
+    return 0;
 }
 
 int main(int argc, char** argv){
@@ -113,7 +119,7 @@ int main(int argc, char** argv){
     char* path;
     path = argv[1];
     int i = 2;
-    int nftw = 0;
+    int is_nftw = 0;
 
     while(i < argc){
         if (!strcmp(argv[i], "-mtime")){
@@ -140,12 +146,14 @@ int main(int argc, char** argv){
             i++;
             max_depth = atoi(argv[i]);
         }
-        else if (!strcmp(argv[i], "nftw")) nftw = 1;
+        else if (!strcmp(argv[i], "nftw")) {
+            is_nftw = 1;
+        }
         i ++;
     }
 
-    if (nftw == 1){
-        find_nftw(path, max_depth);
+    if (is_nftw == 1){
+        nftw(path, find_nftw, 10, FTW_PHYS);
     }
     else{
         find_dir(path, max_depth);
