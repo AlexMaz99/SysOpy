@@ -14,7 +14,7 @@ test:
 	touch dir1/dir2/file2
 	touch dir1/dir2/dir3/file3
 	make compile
-	./myFind ../ -maxdepth 2 -mtime -1
+	./myFind ../ -maxdepth 2 -mtime 0
 
 clean_all:
 	make clean

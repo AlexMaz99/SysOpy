@@ -75,7 +75,7 @@ int check_time(int count, char sign, time_t time_from_file){
     time_t current_date = mktime(time_info);
 
     int diff = difftime(current_date, time_from_file) / 86400; // (24h * 60min * 60s)
-    printf("Diff: %d, count: %d, sign: %c\n", diff, count, sign);
+
     if ((sign == '+' && diff > count) || (sign == '-' && diff < count) || (sign == '=' && diff == count)) 
         return 1;
 
