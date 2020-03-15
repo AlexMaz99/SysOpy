@@ -12,7 +12,7 @@
 #include <ftw.h>
 
 const char format[] = "%Y-%m-%d %H:%M:%S";
-int atime = 0, mtime = 0;
+int atime = -1, mtime = -1;
 int max_depth = -1;
 char asign, msign;
 
@@ -41,8 +41,24 @@ void print_results(char* file_path, struct stat *stat){
 
 }
 
+int check_time(struct stat *dir_stack, int count, char sign, time_t time_from_file){
+    time_t now;
+    struct tm *time_info;
+    time(&now);
+    time_info = localtime(&now);
+    time_t current_date = mktime(time_info);
+
+    int diff = difftime(current_date, time_from_file) / 86400; // (24h * 60min * 60s)
+
+    if ((sign == '+' && diff > count) || (sign == '-' && diff < count) || (sign == '=' && diff == count)) 
+        return 1;
+
+    return 0;
+}
+
 int check_conditions(struct stat* dir_stat){
-    // TO DO
+    if (atime != -1 && check_time(dir_stat, atime, asign, dir_stat -> st_atime) == 0) return 0;
+    if (mtime != -1 && check_time(dir_stat, mtime, msign, dir_stat -> st_mtime) == 0) return 0;
     return 1;
 }
 
@@ -82,9 +98,6 @@ void find_dir(char *path, int depth){
         
     }
     closedir(dir);
-
-
-
 }
 
 void find_nftw(char *path, int max_depth){
@@ -104,7 +117,7 @@ int main(int argc, char** argv){
 
     while(i < argc){
         if (!strcmp(argv[i], "-mtime")){
-            if (mtime != 0){
+            if (mtime != -1){
                 printf("Too many declarations of mtimt");
                 exit(EXIT_FAILURE);
             }
@@ -114,7 +127,7 @@ int main(int argc, char** argv){
             mtime = abs(atoi(argv[i]));
         }
         else if(!strcmp(argv[i], "-atime")){
-            if (atime != 0){
+            if (atime != -1){
                 printf("Too many declarations of atimt");
                 exit(EXIT_FAILURE);
             }
