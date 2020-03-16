@@ -37,9 +37,8 @@ void print_results(char* file_path, struct stat *stat){
     char access_time_str[255];
     strftime(access_time_str, 255, format, &tm_access_time);
 
-    printf("%s || type: %s, size: %ld, modification time: %s, access time: %s, nlinks: %ld\n\n",
+    printf("Path: %s || type: %s, size: %ld, modification time: %s, access time: %s, nlinks: %ld\n\n",
     file_path, file_type, stat -> st_size, modif_time_str, access_time_str, stat -> st_nlink);
-
 }
 
 void print_results_nftw(const char* file_path, const struct stat *stat){
@@ -62,9 +61,8 @@ void print_results_nftw(const char* file_path, const struct stat *stat){
     char access_time_str[255];
     strftime(access_time_str, 255, format, &tm_access_time);
 
-    printf("%s || type: %s, size: %ld, modification time: %s, access time: %s, nlinks: %ld\n\n",
+    printf("Path: %s || type: %s, size: %ld, modification time: %s, access time: %s, nlinks: %ld\n\n",
     file_path, file_type, stat -> st_size, modif_time_str, access_time_str, stat -> st_nlink);
-
 }
 
 int check_time(int count, char sign, time_t time_from_file){
@@ -96,7 +94,6 @@ int check_conditions_nftw(const struct stat* dir_stat){
 
 void find_dir(char *path, int depth){
     if (depth > max_depth) return;
-    //if (max_depth == 0) return;
     if (path == NULL) return;
     DIR* dir = opendir(path);
     if (dir == NULL){
@@ -111,7 +108,6 @@ void find_dir(char *path, int depth){
         strcpy(new_path, path);
         strcat(new_path, "/");
         strcat(new_path, file -> d_name);
-        //printf("File: %s \n", new_path);
         
         struct stat buffer;
         if (lstat(new_path, &buffer) < 0){
@@ -142,7 +138,7 @@ static int find_nftw(const char *fpath, const struct stat *sb, int typeflag, str
 }
 
 int main(int argc, char** argv){
-    if (argc < 3){
+    if (argc < 2){
         printf("Wrong number of arguments");
         exit(EXIT_FAILURE);
     }
