@@ -1,4 +1,3 @@
-#define _XOPEN_SOURCE 500
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -6,9 +5,12 @@
 #include <sys/times.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <sys/wait.h>
 #include <time.h>
+#include <fcntl.h>
 #include <dirent.h>
+#include <limits.h>
+#define __USE_XOPEN_EXTENDED 1
+#include <ftw.h>
 
 void find_dir(char *path){
 
@@ -74,15 +76,55 @@ void find_dir(char *path){
     closedir(dir);
 }
 
+static int find_nftw(const char *fpath, const struct stat *sb, int typeflag, struct FTW *ftwbuf){
+    if (S_ISDIR(sb -> st_mode)){
+        pid_t pid_fork = fork();
+
+        if (pid_fork < 0){
+            printf("Cannot fork\n");
+            exit(EXIT_FAILURE);
+        }
+
+        else if(pid_fork == 0){
+            
+            // get process ID (PID) of the calling process
+            printf("DIRECTORY: %s, PID: %d\n", fpath, getpid());
+            
+            // replace the current process image with a new process image
+            int exec_status = execlp("ls", "ls", "-l", fpath, NULL);
+            if (exec_status != 0){
+                printf("Exec failed");
+                exit(EXIT_FAILURE);
+            }
+            exit(exec_status);
+        }
+
+        else{
+            wait(0);
+        }
+    }
+    return 0;
+}
+
 int main(int argc, char** argv){
-    if (argc != 2){
+    if (argc < 2){
         printf("Wrong number of arguments\n");
         exit(EXIT_FAILURE);
     }
 
     char* path = argv[1];
+    int is_nftw = 0;
 
-    find_dir(path);
+    if (argc == 3 && !strcmp(argv[2], "nftw")){
+        is_nftw = 1;
+    }
+
+    if (is_nftw == 1) {
+        nftw(path, find_nftw, 10, FTW_PHYS);
+    }
+    else {
+        find_dir(path);
+    }
 
     return 0;
 }
