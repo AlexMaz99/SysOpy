@@ -1,7 +1,7 @@
 CC = gcc -Wall
 
 compileM:
-	$(CC) -o macierz macierz.c
+	$(CC) macierz.c -lm -o macierz
 
 compileG:
 	$(CC) -o generator generator.c
