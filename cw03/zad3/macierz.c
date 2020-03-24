@@ -209,12 +209,12 @@ int getIndex(Matrix *matrix, int row, int column){
 void writeValueAtPosition(Matrix *matrix, int row, int column, FILE *file, int value){
     fseek(file, 0, 0);
     int index = getIndex(matrix, row, column);
-    char *number = calloc(matrix -> widthOfColumn, sizeof(char));
+    char *number = (char*)calloc(matrix -> widthOfColumn, sizeof(char));
     sprintf(number, "%d", value);
-    int digits = floor(log10(abs(value))) + 1;
-    if (value < 0) digits ++;
-    for (int i = digits; i < matrix -> widthOfColumn -1; i++){
-        number[i] = ' ';
+    int j = matrix -> widthOfColumn - 1;
+    while(number[j] == 0){
+        number[j] = ' ';
+        j--;
     }
     fseek(file, index, 0);
     fwrite(number, sizeof(char), matrix -> widthOfColumn - 1, file);
@@ -321,7 +321,7 @@ void multiply(int process, int numberOfProcess, int timeLimit, int isDistinct, i
         (*m_counter)++;
         timerStop();
         if ((int) timeDiff(start_t, end_t) >= timeLimit){
-            return;
+            break;
         }
 
     }

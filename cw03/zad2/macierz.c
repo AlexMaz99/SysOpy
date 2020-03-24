@@ -144,9 +144,9 @@ void readList(char *lista){
         printf("Cannot opern list\n");
         exit(EXIT_FAILURE); 
     }
-    char*line = calloc(MAX_ROW_LEN, sizeof(char));
+    char*line = calloc(100, sizeof(char));
     int pairs = 0;
-    while(fgets(line, MAX_ROW_LEN, file) != NULL) pairs ++;
+    while(fgets(line, 100, file) != NULL) pairs ++;
 
     AA = (Matrix**) calloc(pairs, sizeof(Matrix*));
     BB = (Matrix**) calloc(pairs, sizeof(Matrix*));
@@ -156,7 +156,7 @@ void readList(char *lista){
     fseek(file, 0, 0);
     int counter = 0;
 
-    while(fgets(line, MAX_ROW_LEN, file) != NULL){
+    while(fgets(line, 100, file) != NULL){
         char* A = strtok(line, " ");
         char* B = strtok(NULL, " ");
         char* C = strtok(NULL, "\n");
@@ -207,12 +207,12 @@ int getIndex(Matrix *matrix, int row, int column){
 void writeValueAtPosition(Matrix *matrix, int row, int column, FILE *file, int value){
     fseek(file, 0, 0);
     int index = getIndex(matrix, row, column);
-    char *number = calloc(matrix -> widthOfColumn, sizeof(char));
+    char *number = (char*)calloc(matrix -> widthOfColumn, sizeof(char));
     sprintf(number, "%d", value);
-    int digits = floor(log10(abs(value))) + 1;
-    if (value < 0) digits ++;
-    for (int i = digits; i < matrix -> widthOfColumn -1; i++){
-        number[i] = ' ';
+    int j = matrix -> widthOfColumn - 1;
+    while(number[j] == 0) {
+        number[j]=' ';
+        j--;
     }
     fseek(file, index, 0);
     fwrite(number, sizeof(char), matrix -> widthOfColumn - 1, file);
@@ -276,26 +276,19 @@ void createNewFiles(int indexOfMatrix, int startColumn, int numberOfColumnsPerPr
 }
 
 // mulitply all matrices
-int multiply(int process, int numberOfProcess, int timeLimit, int isDistinct){
+void multiply(int process, int numberOfProcess, int timeLimit, int isDistinct, int *operationCounter){
     timerStart();
-    int multiplyingCounter = 0;
+    (*operationCounter) = 0;
 
     for (int i = 0; i < numberOfPairs; i ++){
         int numberOfColumnsPerProcess = 1;
         int startColumn;
 
         if (process >= BB[i] -> numberOfColumns) continue;
-        if (numberOfProcess > BB[i] -> numberOfColumns){
-            numberOfColumnsPerProcess = 1;
-            startColumn = process;
-        }
-        else {
-            numberOfColumnsPerProcess = BB[i] -> numberOfColumns / numberOfProcess;
-            startColumn = numberOfColumnsPerProcess * process;
-            if (process == numberOfProcess - 1){
-                numberOfColumnsPerProcess += BB[i] -> numberOfColumns - numberOfColumnsPerProcess * (process + 1);
-            }
-        }
+        
+        startColumn = process * ceil((double) BB[i] -> numberOfColumns / numberOfProcess);
+        numberOfColumnsPerProcess = min((process + 1) * (int) ceil((double) BB[i] -> numberOfColumns / numberOfProcess), BB[i] -> numberOfColumns) - startColumn;
+        
         if (isDistinct == 1){
             createNewFiles(i, startColumn, numberOfColumnsPerProcess, process);
         }
@@ -316,14 +309,13 @@ int multiply(int process, int numberOfProcess, int timeLimit, int isDistinct){
             fclose(B);
             fclose(C);
         }
-        multiplyingCounter ++;
+        (*operationCounter) ++;
         timerStop();
         if ((int) timeDiff(start_t, end_t) >= timeLimit){
-            exit(multiplyingCounter);
+            break;
         }
-
     }
-    exit(multiplyingCounter);
+    return;
 }
 
 // create empty files which will be needed to paste
@@ -415,7 +407,9 @@ int main(int argc, char** argv){
     for (int i = 0; i < numberOfProcess; i ++){
         pid_t childPid = fork();
         if (childPid == 0){
-            multiply(i, numberOfProcess, timeLimit, isDistinct);
+            int operationCounter;
+            multiply(i, numberOfProcess, timeLimit, isDistinct, &operationCounter);
+            exit(operationCounter);
         }
         else if (childPid > 0){
             childPids[i] = childPid;
@@ -425,19 +419,17 @@ int main(int argc, char** argv){
         }
     }
 
-    if (isDistinct == 1){
-        makePaste(processesForMatrix, numberOfProcess);
-    }
 
     for (int i = 0; i < numberOfProcess; i++){
         int status;
         waitpid(childPids[i], &status, 0);
         printf("The process with PID = %d has done %d multiplying operations\n", childPids[i], WEXITSTATUS(status));
     }
-
+    if (isDistinct == 1){
+        makePaste(processesForMatrix, numberOfProcess);
+    }
 
     freeList();
-
 
     return 0;
 }
