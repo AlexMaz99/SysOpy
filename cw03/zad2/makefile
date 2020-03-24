@@ -7,6 +7,18 @@ compileG:
 	$(CC) -o generator generator.c
 	mkdir macierze
 
+compileT:
+	$(CC) -o test test.c
+
+testAll:
+	make clean
+	make compileG
+	./generator 15 4 18
+	make compileM
+	./macierz lista 10 100000 1
+	make compileT
+	./test lista
+
 clean:
-	rm -f macierz generator lista
+	rm -f macierz generator lista test
 	rm -rf macierze
