@@ -11,6 +11,7 @@
 #include <limits.h>
 #define __USE_XOPEN_EXTENDED 1
 #include <ftw.h>
+#include <wait.h>
 
 void find_dir(char *path){
 
