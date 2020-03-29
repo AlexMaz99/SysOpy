@@ -20,17 +20,21 @@ void signalsHandle(int sig, siginfo_t *info, void *uncontext){
         receivedSignals ++;
 
         if (!strcmp("kill", MODE) || !strcmp("sigrt", MODE)){
+            // send COUNT_SIGNAL to a process
             kill(info -> si_pid, COUNT_SIGNAL);
         }
         else{
+            // send COUNT_SIGNAL to a process with given value
             sigqueue(info -> si_pid, COUNT_SIGNAL, val);
         }
     }
     else if (sig == END_SIGNAL){
         if (!strcmp("kill", MODE) || !strcmp("sigrt", MODE)){
+            // send END_SIGNAL to a process
             kill(info -> si_pid, END_SIGNAL);
         }
         else{
+            // send END_SIGNAL to a process with given value
             sigqueue(info -> si_pid, END_SIGNAL, val);
         }
         printf("Catcher received: %d signals\n", receivedSignals);

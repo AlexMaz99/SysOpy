@@ -1,0 +1,2 @@
+Niezależnie od sposobu wysyłania sygnałów oraz ich ilości catcher otrzymuje prawidłową ilość sygnałów
+oraz sender otrzymuje prawidłową ilość sygnałów powracających.

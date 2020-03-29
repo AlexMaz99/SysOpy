@@ -21,18 +21,22 @@ int signalsSent = 0;
 void sendNextSignal(){
     signalsSent ++;
     if (!strcmp("kill", MODE) || !strcmp("sigrt", MODE)){
+        // send COUNT_SIGNAL to a process with catcherPID
         kill(catcherPID, COUNT_SIGNAL);
     }
     else{
+        // send COUNT_SIGNAL to a process with catcherPID with given value
         sigqueue(catcherPID, COUNT_SIGNAL, val);
     }
 }
 
 void sendEndSignal(){
      if (!strcmp("kill", MODE) || !strcmp("sigrt", MODE)){
+         // send END_SIGNAL to a process with catcherPID
          kill(catcherPID, END_SIGNAL);
      }
      else{
+         // send END_SIGNAL to a process with catcherPID with given value
          sigqueue(catcherPID, END_SIGNAL, val);
      }
 }
