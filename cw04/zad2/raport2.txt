@@ -1,0 +1,7 @@
+FORK:
+Proces potomny dziedziczy ignorowanie, handlery i maskowanie sygnalow.
+Sygnal czekajacy w przodku, nie jest widoczny w potomku.
+
+EXEC:
+Proces potomny dziedziczy ignorowanie i maskowanie sygnalow.
+Sygnal czekajacy w przodku, jest widoczny w potomku.
