@@ -16,6 +16,8 @@ void childHandle(int sig, siginfo_t *info, void *uncontex){
 
 void segFaultHandle(int sig, siginfo_t *info, void *uncontex){
     printf("\nSegmentation fault occured\n");
+    printf("Signal number: %d\n", info -> si_signo);
+    printf("Sending PID: %d\n", info -> si_pid);
     printf("Fault address: %p\n\n", info -> si_addr);
     exit(0);
 }
