@@ -82,8 +82,10 @@ int main(int argc, char **argv){
 
     if (!strcmp("kill", MODE) || !strcmp("sigrt", MODE)){
         for (int i = 0; i < signalsToSend; ++i){
+            // send COUNT_SIGNAL to a process with catcherPID
             kill(catcherPID, COUNT_SIGNAL);
         }
+         // send END_SIGNAL to a process with catcherPID
         kill(catcherPID, END_SIGNAL);
     }
     else{

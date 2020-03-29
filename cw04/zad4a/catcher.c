@@ -20,16 +20,20 @@ void signalsHandle(int sig, siginfo_t *info, void *uncontext){
     else if (sig == END_SIGNAL){
         if (!strcmp("kill", MODE) || !strcmp("sigrt", MODE)){
             for (int i = 0; i < receivedSignals; ++i){
+                // send COUNT_SIGNAL to a process
                 kill(info -> si_pid, COUNT_SIGNAL);
             }
+            // send END_SIGNAL to a process
             kill(info -> si_pid, END_SIGNAL);
         }
         else{
             union sigval val;
             for (int i = 0; i < receivedSignals; ++i){
                 val.sival_int = i;
+                // send COUNT_SIGNAL to a process with given value
                 sigqueue(info -> si_pid, COUNT_SIGNAL, val);
             }
+            // send END_SIGNAL to a process with given value
             sigqueue(info -> si_pid, END_SIGNAL, val);
         }
         printf("Catcher received: %d signals\n", receivedSignals);
@@ -53,7 +57,7 @@ int main(int argc, char **argv){
         COUNT_SIGNAL = SIGUSR1;
         END_SIGNAL = SIGUSR2;
     }
-    else if (!strcmp("sigrt", MODE)){
+    else if (!strcmp("sigrt", MODE)){ //real-time signals
         COUNT_SIGNAL = SIGRTMIN + 1;
         END_SIGNAL = SIGRTMIN + 2;
     }
@@ -62,11 +66,13 @@ int main(int argc, char **argv){
         exit(EXIT_FAILURE);
     }
 
-    sigset_t mask;
-    sigfillset(&mask);
-    sigdelset(&mask, COUNT_SIGNAL);
+    sigset_t mask; // set of signals blocked during operate current process
+    sigfillset(&mask); // initialize set to full, including all signals
+    sigdelset(&mask, COUNT_SIGNAL); // delete COUNT_SIGNAL and END_SIGNAL from set
     sigdelset(&mask, END_SIGNAL);
 
+    // set mask for current process
+    // SIG_BLOCK - the set of blocked signals is the union of the current set and the second argument set
     if (sigprocmask(SIG_BLOCK, &mask, NULL) < 0){
         printf("Cannot block signals\n");
         exit(EXIT_FAILURE);
@@ -79,13 +85,14 @@ int main(int argc, char **argv){
     sigaddset(&act.sa_mask, COUNT_SIGNAL);
     sigaddset(&act.sa_mask, END_SIGNAL);
 
+    // change the action taken by a process on receipt of COUNT_SIGNAL AND END_SIGNAL
     sigaction(COUNT_SIGNAL, &act, NULL);
     sigaction(END_SIGNAL, &act, NULL);
 
     printf("Created catcher with PID: %d\n", getpid());
 
     while (1){
-        usleep(100);
+        usleep(100); // suspend execution of the calling thread for at least 100 microseconds
     }
     return 0;
 }
