@@ -1,0 +1,5 @@
+cat ./main.c | wc -l
+cat ./main.c | head -5 | sort
+cat ./makefile | wc -l
+ps -aux | grep root | wc -l
+ls -al ./ | sort -r | head -1
