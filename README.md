@@ -12,3 +12,4 @@ Jeśli pomogłam, daj gwiazdkę <3
 |[Lab 3](../master/cw03 "Creating process. Process environment, process control") |✓|
 |[Lab 4](../master/cw04 "Signals") |✓|
 |[Lab 5](../master/cw05 "Inter-process communication (pipeline)") |✓|
+|[Lab 6](../master/cw06 "Inter-process communication (queue message)") | |
