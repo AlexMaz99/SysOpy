@@ -1,4 +1,3 @@
-# Zadania - Zestaw 5  
 # Potoki nazwane i nienazwane  
 ## Zadanie 1 (50%)  
 Napisz interpreter poleceń przechowywanych w pliku. Ścieżka do pliku to pierwszy argument wywołania programu.  

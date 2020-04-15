@@ -1,3 +1,4 @@
+# Pliki
 ## Zadanie 1. Porównanie wydajności systemowych i bibliotecznych funkcji We/Wy (55%)
 
 * (30%) Celem zadania jest napisanie programu porównującego wydajność systemowych oraz bibliotecznych funkcji wejścia/wyjścia. Program operował będzie na przechowywanej w pliku tablicy napisów (rekordów). Dla uproszczenia pojedynczy napis będzie miał stałą wielkość. Nazwa pliku, wielkość oraz liczba  i długość napisów stanowić będą argumenty wywołania programu.
