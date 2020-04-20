@@ -11,10 +11,17 @@ Serwer ma umożliwiać łączenie klientów w pary - klienci przechodząc do try
 
 Rodzaje zleceń
 * LIST:
-Zlecenie wypisania listy wszystkich aktywnych klientów wraz z informacja czy są dostępni do połączenia.
-* CONNECT id_klienta: Zlecenie połączenia się z konkretnym klientem. Zleceniodawca wysyła do serwera id_klienta z listy aktywnych klientów. Serwer wysyła mu klucz kolejki klienta z którym chce się połączyć. Następnie serwer wysyła klucz kolejki zleceniodawcy do wybranego klienta. Obaj klienci przechodzą w tryb chatu - wysyłają sobie wiadomości bezpośrednio(bez udziału serwera). Serwer oznacza ich jako niedostępnych do połączenia dla innych klientów. (Należy umożliwić zerwanie połączenia - co skutkuje wysłaniem DISCONNECT do serwera).
-* DISCONNECT: Zlecenie ustawienia klienta jako dostępnego do połączenia.
-* STOP: Zgłoszenie zakończenia pracy klienta.  Klient wysyła ten komunikat, kiedy kończy pracę, aby serwer mógł usunąć z listy jego kolejkę. Następnie kończy pracę, usuwając swoją kolejkę. Komunikat ten wysyłany jest również, gdy po stronie klienta zostanie wysłany sygnał SIGINT.
+
+    Zlecenie wypisania listy wszystkich aktywnych klientów wraz z informacja czy są dostępni do połączenia.
+* CONNECT id_klienta: 
+
+    Zlecenie połączenia się z konkretnym klientem. Zleceniodawca wysyła do serwera id_klienta z listy aktywnych klientów. Serwer wysyła mu klucz kolejki klienta z którym chce się połączyć. Następnie serwer wysyła klucz kolejki zleceniodawcy do wybranego klienta. Obaj klienci przechodzą w tryb chatu - wysyłają sobie wiadomości bezpośrednio(bez udziału serwera). Serwer oznacza ich jako niedostępnych do połączenia dla innych klientów. (Należy umożliwić zerwanie połączenia - co skutkuje wysłaniem DISCONNECT do serwera).
+* DISCONNECT: 
+
+    Zlecenie ustawienia klienta jako dostępnego do połączenia.
+* STOP: 
+
+    Zgłoszenie zakończenia pracy klienta.  Klient wysyła ten komunikat, kiedy kończy pracę, aby serwer mógł usunąć z listy jego kolejkę. Następnie kończy pracę, usuwając swoją kolejkę. Komunikat ten wysyłany jest również, gdy po stronie klienta zostanie wysłany sygnał SIGINT.
 
 Zlecenia powinny być obsługiwane zgodnie z priorytetami, najwyższy priorytet ma STOP, potem DISCONNECT oraz LIST i reszta. Można tego dokonać poprzez sterowanie parametrem MTYPE w funkcji msgsnd.
 
