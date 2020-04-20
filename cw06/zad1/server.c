@@ -28,7 +28,7 @@ void quit(int signum){
                 exit(EXIT_FAILURE);
             }
             if (msgrcv(server_queue, reply_msg, MESSAGE_SIZE, STOP, 0) < 0){
-                printf("ERROR: Cannot received message in function quit\n");
+                printf("ERROR: Cannot receive message in function quit\n");
                 exit(EXIT_FAILURE);
             }
         }
@@ -196,4 +196,5 @@ int main(){
         }
         process_message(msg);
     }
+    return 0;
 }
