@@ -12,3 +12,4 @@
 |[5](../master/cw05 "Cw 05") |Inter-process communication (pipeline) |✓|
 |[6](../master/cw06 "Cw 06") |Inter-process communication (queue message) |✓|
 |[7](../master/cw07 "Cw 07") |Inter-process communication (semaphore) |✓|
+|[8](../master/cw08 "Cw 08") |Threads - image filtering | |
