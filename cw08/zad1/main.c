@@ -194,10 +194,13 @@ void save_times(char *file_name, char* method, pthread_t * threads, clock_t star
     for (int i = 0; i < number_of_threads; i++){
         int *time;
         pthread_join(threads[i], (void **) &time);
+        printf("Thread: %ld, time: %d [us]\n", threads[i], *time);
         fprintf(times, "Thread: %d, time: %d [us]\n", i + 1, *time);
     }
 
-    fprintf(times, "Full time: %d [us]\n", calculate_time(start_time));
+    int time = calculate_time(start_time);
+    printf("Full time: %d [us]\n\n", time);
+    fprintf(times, "Full time: %d [us]\n", time);
 }
 
 int main(int argc, char **argv){
