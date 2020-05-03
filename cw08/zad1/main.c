@@ -3,6 +3,7 @@
 #include <string.h>
 #include <pthread.h>
 #include <sys/times.h>
+#include <sys/time.h>
 #include <math.h>
 #include <unistd.h>
 
@@ -84,15 +85,18 @@ void load_image(char *file_name){
     fclose(file);
 }
 
-int calculate_time (clock_t start_time){
-    clock_t end_time = clock();
-    return (1e6 * (end_time - start_time) / sysconf(_SC_CLK_TCK));
+// return time in microseconds
+int calculate_time(struct timeval start_time){
+    struct timeval end_time;
+    gettimeofday(&end_time, NULL);
+    return ((end_time.tv_sec - start_time.tv_sec) * 1e6) + (end_time.tv_usec - start_time.tv_usec);
 }
 
 void *sign_thread(void *arg){
     int index = *((int*)arg);
 
-    clock_t start_time = clock();
+    struct timeval start_time;
+    gettimeofday(&start_time, NULL);
 
     int min_value = index * ceil((double) NUMBER_OF_PIXELS / number_of_threads);
     int max_value = (index + 1) * ceil((double) NUMBER_OF_PIXELS / number_of_threads) - 1;
@@ -115,7 +119,8 @@ void *sign_thread(void *arg){
 void *block_thread(void *arg){
     int index = *((int*)arg);
 
-    clock_t start_time = clock();
+    struct timeval start_time;
+    gettimeofday(&start_time, NULL);
 
     int start_col = index * ceil((double) width / number_of_threads);
     int end_col = (index + 1) * ceil((double) width / number_of_threads);
@@ -136,7 +141,8 @@ void *block_thread(void *arg){
 void *interleaved_thread(void *arg){
     int index = *((int*)arg);
 
-    clock_t start_time = clock();
+    struct timeval start_time;
+    gettimeofday(&start_time, NULL);
 
     int start_col = index;
     int step = number_of_threads;
@@ -184,8 +190,24 @@ void save_result_to_file(char* file_name){
     fclose(file);
 }
 
+void print_times(long int thread, int microseconds, FILE *times, int i){
+    int seconds = microseconds / 1e6;
+    microseconds -= seconds * 1e6;
+    int miliseconds = microseconds / 1e3;
+    microseconds -= miliseconds * 1e3;
+
+    if (thread == -1){
+        printf("Full time: %d seconds %d miliseconds %d microseconds\n\n", seconds, miliseconds, microseconds);
+        fprintf(times, "Full time: %d seconds %d miliseconds %d microseconds\n", seconds, miliseconds, microseconds);
+    }
+    else{
+        printf("Thread: %ld, time: %d seconds %d miliseconds %d microseconds\n", thread, seconds, miliseconds, microseconds);
+        fprintf(times, "Thread: %d, time: %d seconds %d miliseconds %d microseconds\n", i, seconds, miliseconds, microseconds);
+    }
+}
+
 // save times to Times.txt
-void save_times(char *file_name, char* method, pthread_t * threads, clock_t start_time){
+void save_times(char *file_name, char* method, pthread_t * threads, struct timeval start_time){
     FILE* times = fopen(file_name, "a");
     if (times == NULL)
         error_exit("Cannot open file");
@@ -194,13 +216,11 @@ void save_times(char *file_name, char* method, pthread_t * threads, clock_t star
     for (int i = 0; i < number_of_threads; i++){
         int *time;
         pthread_join(threads[i], (void **) &time);
-        printf("Thread: %ld, time: %d [us]\n", threads[i], *time);
-        fprintf(times, "Thread: %d, time: %d [us]\n", i + 1, *time);
+        print_times(threads[i], *time, times, i + 1);
     }
 
-    int time = calculate_time(start_time);
-    printf("Full time: %d [us]\n\n", time);
-    fprintf(times, "Full time: %d [us]\n", time);
+    print_times(-1, calculate_time(start_time), times, -1);
+    fclose(times);
 }
 
 int main(int argc, char **argv){
@@ -233,7 +253,8 @@ int main(int argc, char **argv){
     for (int i = 0; i < number_of_threads; i ++)
         histograms[i] = (int*)calloc(NUMBER_OF_PIXELS, sizeof(int));
     
-    clock_t start_time = clock();
+    struct timeval start_time;
+    gettimeofday(&start_time, NULL);
 
     pthread_t * threads = (pthread_t*)calloc(number_of_threads, sizeof(pthread_t));
     int *indexes = (int*)calloc(number_of_threads, sizeof(int));

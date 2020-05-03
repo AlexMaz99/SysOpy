@@ -1,81 +1,81 @@
 
 ______ sign => 1 threads ______
-Thread: 1, time: 15470000 [us]
-Full time: 17120000 [us]
+Thread: 1, time: 0 seconds 1 miliseconds 580 microseconds
+Full time: 0 seconds 3 miliseconds 149 microseconds
 
 ______ block => 1 threads ______
-Thread: 1, time: 8540000 [us]
-Full time: 9990000 [us]
+Thread: 1, time: 0 seconds 0 miliseconds 842 microseconds
+Full time: 0 seconds 1 miliseconds 451 microseconds
 
 ______ interleaved => 1 threads ______
-Thread: 1, time: 8690000 [us]
-Full time: 10220000 [us]
+Thread: 1, time: 0 seconds 0 miliseconds 964 microseconds
+Full time: 0 seconds 1 miliseconds 500 microseconds
 
 ______ sign => 2 threads ______
-Thread: 1, time: 20860000 [us]
-Thread: 2, time: 28200000 [us]
-Full time: 32870000 [us]
+Thread: 1, time: 0 seconds 1 miliseconds 501 microseconds
+Thread: 2, time: 0 seconds 1 miliseconds 463 microseconds
+Full time: 0 seconds 6 miliseconds 564 microseconds
 
 ______ block => 2 threads ______
-Thread: 1, time: 4420000 [us]
-Thread: 2, time: 4870000 [us]
-Full time: 10910000 [us]
+Thread: 1, time: 0 seconds 0 miliseconds 443 microseconds
+Thread: 2, time: 0 seconds 0 miliseconds 485 microseconds
+Full time: 0 seconds 1 miliseconds 114 microseconds
 
 ______ interleaved => 2 threads ______
-Thread: 1, time: 4350000 [us]
-Thread: 2, time: 4950000 [us]
-Full time: 11220000 [us]
+Thread: 1, time: 0 seconds 0 miliseconds 766 microseconds
+Thread: 2, time: 0 seconds 0 miliseconds 817 microseconds
+Full time: 0 seconds 1 miliseconds 809 microseconds
 
 ______ sign => 4 threads ______
-Thread: 1, time: 11710000 [us]
-Thread: 2, time: 15680000 [us]
-Thread: 3, time: 30910000 [us]
-Thread: 4, time: 11340000 [us]
-Full time: 57150000 [us]
+Thread: 1, time: 0 seconds 1 miliseconds 174 microseconds
+Thread: 2, time: 0 seconds 1 miliseconds 594 microseconds
+Thread: 3, time: 0 seconds 1 miliseconds 603 microseconds
+Thread: 4, time: 0 seconds 1 miliseconds 732 microseconds
+Full time: 0 seconds 16 miliseconds 264 microseconds
 
 ______ block => 4 threads ______
-Thread: 1, time: 2270000 [us]
-Thread: 2, time: 2520000 [us]
-Thread: 3, time: 2670000 [us]
-Thread: 4, time: 2740000 [us]
-Full time: 12430000 [us]
+Thread: 1, time: 0 seconds 0 miliseconds 269 microseconds
+Thread: 2, time: 0 seconds 0 miliseconds 267 microseconds
+Thread: 3, time: 0 seconds 0 miliseconds 238 microseconds
+Thread: 4, time: 0 seconds 0 miliseconds 277 microseconds
+Full time: 0 seconds 3 miliseconds 894 microseconds
 
 ______ interleaved => 4 threads ______
-Thread: 1, time: 2160000 [us]
-Thread: 2, time: 2150000 [us]
-Thread: 3, time: 2350000 [us]
-Thread: 4, time: 2850000 [us]
-Full time: 11660000 [us]
+Thread: 1, time: 0 seconds 0 miliseconds 218 microseconds
+Thread: 2, time: 0 seconds 0 miliseconds 218 microseconds
+Thread: 3, time: 0 seconds 0 miliseconds 252 microseconds
+Thread: 4, time: 0 seconds 0 miliseconds 254 microseconds
+Full time: 0 seconds 3 miliseconds 888 microseconds
 
 ______ sign => 8 threads ______
-Thread: 1, time: 15480000 [us]
-Thread: 2, time: 12720000 [us]
-Thread: 3, time: 34300000 [us]
-Thread: 4, time: 14490000 [us]
-Thread: 5, time: 14870000 [us]
-Thread: 6, time: 13010000 [us]
-Thread: 7, time: 11170000 [us]
-Thread: 8, time: 9360000 [us]
-Full time: 104150000 [us]
+Thread: 1, time: 0 seconds 0 miliseconds 981 microseconds
+Thread: 2, time: 0 seconds 1 miliseconds 319 microseconds
+Thread: 3, time: 0 seconds 1 miliseconds 452 microseconds
+Thread: 4, time: 0 seconds 10 miliseconds 249 microseconds
+Thread: 5, time: 0 seconds 1 miliseconds 528 microseconds
+Thread: 6, time: 0 seconds 1 miliseconds 321 microseconds
+Thread: 7, time: 0 seconds 1 miliseconds 138 microseconds
+Thread: 8, time: 0 seconds 1 miliseconds 362 microseconds
+Full time: 0 seconds 21 miliseconds 449 microseconds
 
 ______ block => 8 threads ______
-Thread: 1, time: 2170000 [us]
-Thread: 2, time: 1660000 [us]
-Thread: 3, time: 2140000 [us]
-Thread: 4, time: 1640000 [us]
-Thread: 5, time: 1820000 [us]
-Thread: 6, time: 2030000 [us]
-Thread: 7, time: 1780000 [us]
-Thread: 8, time: 1810000 [us]
-Full time: 19550000 [us]
+Thread: 1, time: 0 seconds 0 miliseconds 139 microseconds
+Thread: 2, time: 0 seconds 0 miliseconds 141 microseconds
+Thread: 3, time: 0 seconds 0 miliseconds 177 microseconds
+Thread: 4, time: 0 seconds 0 miliseconds 185 microseconds
+Thread: 5, time: 0 seconds 0 miliseconds 208 microseconds
+Thread: 6, time: 0 seconds 0 miliseconds 215 microseconds
+Thread: 7, time: 0 seconds 0 miliseconds 272 microseconds
+Thread: 8, time: 0 seconds 0 miliseconds 216 microseconds
+Full time: 0 seconds 7 miliseconds 382 microseconds
 
 ______ interleaved => 8 threads ______
-Thread: 1, time: 1120000 [us]
-Thread: 2, time: 1140000 [us]
-Thread: 3, time: 1140000 [us]
-Thread: 4, time: 1140000 [us]
-Thread: 5, time: 1250000 [us]
-Thread: 6, time: 1540000 [us]
-Thread: 7, time: 1730000 [us]
-Thread: 8, time: 1280000 [us]
-Full time: 13710000 [us]
+Thread: 1, time: 0 seconds 0 miliseconds 120 microseconds
+Thread: 2, time: 0 seconds 0 miliseconds 111 microseconds
+Thread: 3, time: 0 seconds 0 miliseconds 114 microseconds
+Thread: 4, time: 0 seconds 0 miliseconds 114 microseconds
+Thread: 5, time: 0 seconds 0 miliseconds 119 microseconds
+Thread: 6, time: 0 seconds 0 miliseconds 181 microseconds
+Thread: 7, time: 0 seconds 0 miliseconds 245 microseconds
+Thread: 8, time: 0 seconds 0 miliseconds 160 microseconds
+Full time: 0 seconds 4 miliseconds 186 microseconds
